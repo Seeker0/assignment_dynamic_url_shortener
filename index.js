@@ -31,26 +31,43 @@ app.get('/', (req, res) => {
 app.post('/', (req, res, next) => {
   let url = req.body.original_url;
   let short_url = shortener(url);
-  redisClient.set(short_url[0], short_url[1], err => {
-    if (err) {
-      next(err);
-    } else {
-      let redKeys = redisClient.keys('*', (err, keys) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(keys);
-          let originalUrls = [];
-          for (let i = 0; i < keys.length; i++) {
-            originalUrls.push(keys[i]);
-          }
-          console.log(originalUrls);
-          return keys;
-        }
-      });
+
+  const getNewKey = () => {
+    redisClient.hgetall('newKey', (err, data) => {
+      console.log(err, data);
+      res.render('index', { newKey: data });
+    });
+  };
+
+  redisClient.hmset(
+    'newKey',
+    {
+      shortKey: `${short_url[0]}`,
+      longKey: `${short_url[1]}`,
+      use: '0'
+    },
+    (err, status) => {
+      console.log(err, status);
+      getNewKey();
     }
-  });
+  );
 });
+
+// let redKeys = redisClient.keys('*', (err, keys) => {
+//   if (err) {
+//     console.error(err);
+//   } else {
+//     console.log(keys);
+//     let originalUrls = [];
+//     for (let i = 0; i < keys.length; i++) {
+//       originalUrls.push(keys[i]);
+//     }
+//     console.log(originalUrls);
+//     return keys;
+//   }
+// });
+// }
+// });
 
 app.use((err, req, res, next) => {
   if (res.headersSent) {

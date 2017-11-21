@@ -23,11 +23,11 @@
       </tr>
       </thead>
       <tbody id='body'>
-        {{#each redKeys as |url|}}
+        {{#each newKey as |key|}}
         <tr>
-          <td>{{url}}</td>
-          <td>{{url}}</td>
-          <td>{{url}}</td>
+          <td>{{key.shortKey}}</td>
+          <td>{{key.longKey}}</td>
+          <td>{{key.use}}</td>
         </tr>
         {{/each}}
       </tbody>
