@@ -1,0 +1,36 @@
+<body>
+  <h1>Url Shortener</h1>
+  <div id = "url">
+  <h1 id = "count"></h1>
+
+</div>
+
+
+  <form action="/" method="post">
+    <input type = "text" name = "original_url" placeholder = "Add URL here">
+    <input id="shorten" type='submit'>
+  </form>
+
+
+
+  <div id='table'>
+    <table>
+      <thead>
+      <tr>
+        <th>Shortened URL</th>
+        <th>Original URL</th>
+        <th>Number of times used</th>
+      </tr>
+      </thead>
+      <tbody id='body'>
+        {{#each redKeys as |url|}}
+        <tr>
+          <td>{{url}}</td>
+          <td>{{url}}</td>
+          <td>{{url}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+</body>

@@ -9,11 +9,10 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src = "/index.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-
+    <script src = "/socket.io/socket.io.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -23,47 +22,19 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <h1>Url Shortener</h1>
-    <div id = "url">
-    <h1 id = "count"></h1>
-
-  </div>
 
 
-    <form action="/" method="post">
-      <input type = "text" name = "original_url" placeholder = "Add URL here">
-      <input id="shorten" type='submit'>
-    </form>
+  {{{body}}}
 
-
-
-    <div id='table'>
-      <table>
-        <thead>
-        <tr>
-          <th>Shortened URL</th>
-          <th>Original URL</th>
-          <th>Number of times used</th>
-        </tr>
-        </thead>
-        <tbody id='body'>
-
-        </tbody>
-      </table>
-
-  </body>
   <script>
-  //   let socket = io.connect('http://localhost:3000');
-// socket.on('new count', function(count) {
-// 	$('#count').html(count);
-// });
-// $('#increment').click(function() {
-// 	socket.emit('increment');
-// });
-// $('#decrement').click(function() {
-// 	socket.emit('decrement');
-// });
+    let socket = io.connect('http://localhost:3000');
+socket.on('new count', function(count) {
+	$('#count').html(count);
+});
+$('#shorten').click(function() {
+	socket.emit('increment');
+});
+
 $('#shorten').click(function() {
   $('#body').append(
     `<tr><td>${shortUrl}</td><td>${originalUrl}</td><td>${used}</td></tr>`
